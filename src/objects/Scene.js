@@ -1,20 +1,19 @@
-import { Group } from 'three';
-import Land from './Land/Land.js';
-import Flower from './Flower/Flower.js';
-import BasicLights from './Lights.js';
+import { Group } from "three";
+
+import BasicLights from "./Lights.js";
+import BlochSphere from "./BlochSphere";
 
 export default class SeedScene extends Group {
   constructor() {
     super();
 
-    const land = new Land();
-    const flower = new Flower();
     const lights = new BasicLights();
+    this.blochSphere = new BlochSphere();
 
-    this.add(land, flower, lights);
+    this.add(lights, this.blochSphere);
   }
 
   update(timeStamp) {
-    this.rotation.y = timeStamp / 10000;
+    this.blochSphere && this.blochSphere.update(timeStamp);
   }
 }

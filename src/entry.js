@@ -9,22 +9,26 @@
 
 import { WebGLRenderer, PerspectiveCamera, Scene, Vector3 } from "three";
 import SeedScene from "./objects/Scene.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 const scene = new Scene();
 const camera = new PerspectiveCamera();
 const renderer = new WebGLRenderer({ antialias: true });
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableKeys = false;
+
 const seedScene = new SeedScene();
 
 // scene
 scene.add(seedScene);
 
 // camera
-camera.position.set(6, 3, -10);
+camera.position.set(0, 5, 10);
 camera.lookAt(new Vector3(0, 0, 0));
 
 // renderer
 renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setClearColor(0x7ec0ee, 1);
+renderer.setClearColor(0xffffff, 1);
 
 // render loop
 const onAnimationFrameHandler = (timeStamp) => {
