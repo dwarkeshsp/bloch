@@ -5,6 +5,7 @@ export default class BlochSphere extends THREE.Group {
   constructor() {
     super();
 
+    this.blochVector = new BlochVector();
     this.target = new THREE.Vector3();
     this.moving = false;
 
@@ -14,8 +15,8 @@ export default class BlochSphere extends THREE.Group {
       new THREE.SphereGeometry(1, 64, 64),
       new THREE.MeshPhongMaterial({
         transparent: true,
-        opacity: 0.5,
-        color: 0xffa500,
+        opacity: 0.25,
+        color: 0xffffff,
       })
     );
 
@@ -108,7 +109,8 @@ export default class BlochSphere extends THREE.Group {
       zArrow,
       xLabel,
       yLabel,
-      zLabel
+      zLabel,
+      this.blochVector
     );
 
     this.rotateY(-Math.PI / 4);
@@ -152,6 +154,7 @@ export default class BlochSphere extends THREE.Group {
         console.log("done");
       }
     }
+    this.blochVector.update(timeStamp);
   }
 }
 
@@ -159,15 +162,41 @@ class BlochVector extends THREE.Group {
   constructor() {
     super();
 
-    this.currentQuaternion;
-    this.finalQuaternion;
+    this.currentQuaternion = this.quaternion;
+    this.targetQuaternion = this.currentQuaternion;
     // w = cos (theta /2)
     // x = ux * sin(theta / 2)
+    console.log(this.quaternion);
+
+    const axis = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.03, 0.03, 1),
+      new THREE.MeshBasicMaterial({ color: new THREE.Color(this.color()) })
+    );
+    axis.translateY(0.5);
+
+    this.axis = axis;
+
+    const arrow = new THREE.Mesh(
+      new THREE.ConeGeometry(0.1, 0.2, 32),
+      new THREE.MeshBasicMaterial({ color: new THREE.Color(this.color()) })
+    );
+    arrow.translateY(1.1);
+
+    this.arrow = arrow;
+
+    this.add(this.axis, this.arrow);
+  }
+
+  color() {
+    const r = (this.currentQuaternion.x * 128 + 127).toString();
+    const g = (this.currentQuaternion.y * 128 + 127).toString();
+    const b = (this.currentQuaternion.z * 128 + 127).toString();
+    return "rgb(" + r + ", " + g + ", " + b + ")";
   }
 
   rotate(gate) {}
 
-  update(timestamp) {}
+  update(timeStamp) {}
 }
 
 // Code from https://github.com/stewdio/q.js/blob/9cf1add65e4c05c5ec458af88d41bfe22aecdc54/assets/SurfaceText.js
