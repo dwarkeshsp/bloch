@@ -7,8 +7,11 @@ export default class Gate extends THREE.Group {
     this.name = name;
     this.unitQuaterion = unitQuaterion;
 
+    const geometry = new THREE.BoxGeometry(2, 2, 0.05);
+    geometry.translate(position.x, position.y, position.z);
+
     const plane = new THREE.Mesh(
-      new THREE.PlaneGeometry(2, 2),
+      geometry,
       new THREE.MeshPhongMaterial({
         color: 0x00ff00,
         transparent: true,
@@ -16,12 +19,13 @@ export default class Gate extends THREE.Group {
         side: THREE.DoubleSide,
       })
     );
-    plane.translateX(position.x);
-    plane.translateY(position.y);
-    plane.translateZ(position.z);
+    // plane.tr
 
     plane.geometry.computeBoundingBox();
-    this.boundingBox = plane.geometry.boundingBox;
+    this.boundingBox = plane.geometry.boundingBox.clone();
+    // this.boundingBox.expandByVector(0, 0, 1);
+
+    // console.log(name, "min", dthis.boundingBox.min, "max", this.boundingBox.max);
 
     this.add(plane);
 
@@ -61,16 +65,17 @@ export default class Gate extends THREE.Group {
     // this.add(plane, text);
   }
 
-  //   intersectsPoint(p) {
-  //     const min = this.boundingBox.min,
-  //       max = this.boundingBox.max;
-  //     return (
-  //       min.x < p.x &&
-  //       min.y < p.y &&
-  //       min.z < p.z &&
-  //       max.x > p.x &&
-  //       max.y > p.y &&
-  //       max.z > p.z
-  //     );
-  //   }
+  intersectsPoint(p) {
+    // const min = this.boundingBox.min,
+    //   max = this.boundingBox.max;
+    // return (
+    //   min.x <= p.x &&
+    //   min.y <= p.y &&
+    //   min.z <= p.z &&
+    //   max.x >= p.x &&
+    //   max.y >= p.y &&
+    //   max.z >= p.z
+    // );
+    return this.boundingBox.containsPoint(p);
+  }
 }
