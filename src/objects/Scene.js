@@ -3,8 +3,9 @@ import * as THREE from "three";
 import Lights from "./Lights.js";
 import BlochSphere from "./BlochSphere";
 import Gate from "./Gate";
+import Floor from "./Floor";
 
-export default class SeedScene extends THREE.Group {
+export default class Scene extends THREE.Group {
   constructor() {
     super();
 
@@ -41,7 +42,8 @@ export default class SeedScene extends THREE.Group {
 
     for (const gate of this.gates) {
       if (gate.intersectsPoint(this.blochSphere.position)) {
-        console.log("intersect");
+        console.log("a");
+        // this.blochSphere.applyQuaternion(gate.quaternion);
       }
     }
   }
