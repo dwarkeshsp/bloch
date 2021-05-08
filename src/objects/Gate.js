@@ -16,14 +16,14 @@ export default class Gate extends THREE.Group {
         side: THREE.DoubleSide,
       })
     );
-    // plane.translateX(position.x);
-    // plane.translateY(position.y);
-    // plane.translateZ(position.z);
+    plane.translateX(position.x);
+    plane.translateY(position.y);
+    plane.translateZ(position.z);
 
-    // plane.geometry.computeBoundingBox();
-    // this.boundingBox = plane.geometry.boundingBox;
+    plane.geometry.computeBoundingBox();
+    this.boundingBox = plane.geometry.boundingBox;
 
-    // this.add(plane);
+    this.add(plane);
 
     // const textStyle = {
     //   width: 128,

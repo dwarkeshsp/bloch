@@ -33,7 +33,7 @@ export default class SeedScene extends THREE.Group {
       ),
     ];
 
-    this.add(new Lights(), this.blochSphere);
+    this.add(new Lights(), this.blochSphere, ...this.gates);
   }
 
   update(timeStamp) {
