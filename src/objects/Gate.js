@@ -16,14 +16,14 @@ export default class Gate extends THREE.Group {
         side: THREE.DoubleSide,
       })
     );
-    plane.translateX(position.x);
-    plane.translateY(position.y);
-    plane.translateZ(position.z);
+    // plane.translateX(position.x);
+    // plane.translateY(position.y);
+    // plane.translateZ(position.z);
 
-    plane.geometry.computeBoundingBox();
-    this.boundingBox = plane.geometry.boundingBox;
+    // plane.geometry.computeBoundingBox();
+    // this.boundingBox = plane.geometry.boundingBox;
 
-    this.add(plane);
+    // this.add(plane);
 
     // const textStyle = {
     //   width: 128,
@@ -61,16 +61,16 @@ export default class Gate extends THREE.Group {
     // this.add(plane, text);
   }
 
-  intersectsPoint(p) {
-    const min = this.boundingBox.min,
-      max = this.boundingBox.max;
-    return (
-      min.x < p.x &&
-      min.y < p.y &&
-      min.z < p.z &&
-      max.x > p.x &&
-      max.y > p.y &&
-      max.z > p.z
-    );
-  }
+  //   intersectsPoint(p) {
+  //     const min = this.boundingBox.min,
+  //       max = this.boundingBox.max;
+  //     return (
+  //       min.x < p.x &&
+  //       min.y < p.y &&
+  //       min.z < p.z &&
+  //       max.x > p.x &&
+  //       max.y > p.y &&
+  //       max.z > p.z
+  //     );
+  //   }
 }
