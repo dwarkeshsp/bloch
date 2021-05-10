@@ -114,7 +114,7 @@ export default class BlochSphere extends THREE.Group {
       this.blochVector
     );
 
-    // this.rotateY(-Math.PI / 4);
+    this.rotateY(-Math.PI / 4);
   }
 
   onKeyDown(key) {

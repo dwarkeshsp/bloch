@@ -31,28 +31,33 @@ export default class BlochVector extends THREE.Group {
   }
 
   applyQMatrix(qMatrix) {
-    console.log("before", this.state);
+    // console.log("before", this.state);
 
     this.state = math.multiply(qMatrix, this.state);
     const alpha = math.subset(this.state, math.index(0, 0));
     const beta = math.subset(this.state, math.index(1, 0));
 
     // equation derived using http://akyrillidis.github.io/notes/quant_post_7
-    this.theta = math.multiply(2, math.acos(alpha));
-    this.phi = math.log(math.divide(beta, math.sin(this.theta / 2)));
+    this.theta = math.re(math.multiply(2, math.acos(alpha)));
+    this.phi = math.re(
+      math.divide(
+        math.log(math.divide(beta, math.sin(this.theta / 2))),
+        math.complex(0, 1)
+      )
+    );
+
+    console.log("state", alpha, beta);
+
+    console.log("angles", this.theta, this.phi);
 
     if (isNaN(this.theta) || this.theta == Infinity || this.theta == -Infinity)
       this.theta = 0;
     if (isNaN(this.phi) || this.phi == Infinity || this.phi == -Infinity)
       this.phi = 0;
 
-    this.rotation.x = this.theta;
+    // this.rotation.x = this.theta;
 
-    console.log(alpha, beta);
-
-    console.log(this.theta, this.phi);
-
-    console.log("after", this.state);
+    // console.log("after", this.state);
 
     this.rotating = true;
 

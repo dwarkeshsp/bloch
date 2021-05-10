@@ -25,7 +25,7 @@ export default class Scene extends THREE.Group {
         "Pauli Y",
         math.matrix([
           [0, math.complex(0, -1)],
-          [1, math.complex(0, 1)],
+          [math.complex(0, 1), 0],
         ]),
         new THREE.Vector3(-2, 0, -1.5)
       ),
