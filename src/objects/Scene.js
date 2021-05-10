@@ -43,7 +43,7 @@ export default class Scene extends THREE.Group {
     for (const gate of this.gates) {
       if (gate.intersectsPoint(this.blochSphere.position)) {
         console.log(gate.name);
-        this.blochSphere.applyGate(gate.unitQuaterion, timeStamp);
+        this.blochSphere.applyGate(gate.qMatrix, timeStamp);
       }
     }
   }

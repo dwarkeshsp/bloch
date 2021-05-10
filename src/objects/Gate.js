@@ -1,11 +1,12 @@
 import * as THREE from "three";
 
 export default class Gate extends THREE.Group {
-  constructor(name, unitQuaterion, position) {
+  constructor(name, qMatrix, position) {
     super();
 
     this.name = name;
-    this.unitQuaterion = unitQuaterion;
+
+    this.qMatrix = qMatrix;
 
     const geometry = new THREE.BoxGeometry(2, 2, 0.05);
     geometry.translate(position.x, position.y, position.z);
