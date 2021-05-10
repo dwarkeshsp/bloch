@@ -1,4 +1,5 @@
 import * as math from "mathjs";
+import { string } from "mathjs";
 import * as THREE from "three";
 
 export default class BlochVector extends THREE.Group {
@@ -30,23 +31,25 @@ export default class BlochVector extends THREE.Group {
     this.add(this.axis, this.arrow);
   }
 
+  alpha() {
+    return math.subset(this.state, math.index(0, 0));
+  }
+
+  beta() {
+    return math.subset(this.state, math.index(1, 0));
+  }
+
   applyQMatrix(qMatrix) {
     // console.log("before", this.state);
 
     this.state = math.multiply(qMatrix, this.state);
-    const alpha = math.subset(this.state, math.index(0, 0));
-    const beta = math.subset(this.state, math.index(1, 0));
-
     // equation derived using http://akyrillidis.github.io/notes/quant_post_7
-    this.theta = math.re(math.multiply(2, math.acos(alpha)));
+    this.theta = math.re(math.multiply(2, math.acos(this.alpha())));
     this.phi = math.re(
-      math.divide(
-        math.log(math.divide(beta, math.sin(this.theta / 2))),
-        math.complex(0, 1)
-      )
+      math.im(math.log(math.divide(this.beta(), math.sin(this.theta / 2))))
     );
 
-    console.log("state", alpha, beta);
+    console.log("state", this.alpha(), this.beta());
 
     console.log("angles", this.theta, this.phi);
 
@@ -54,8 +57,6 @@ export default class BlochVector extends THREE.Group {
       this.theta = 0;
     if (isNaN(this.phi) || this.phi == Infinity || this.phi == -Infinity)
       this.phi = 0;
-
-    // this.rotation.x = this.theta;
 
     // console.log("after", this.state);
 
@@ -92,4 +93,33 @@ export default class BlochVector extends THREE.Group {
       }
     }
   }
+
+  stateToString() {
+    const alpha = this.alpha();
+    const beta = this.beta();
+
+    return "Amplitudes: [ ".concat(
+      round(math.re(alpha)),
+      " + ",
+      round(math.im(alpha)),
+      "i, ",
+      round(math.re(beta)),
+      " + ",
+      round(math.im(beta)),
+      "i ]"
+    );
+  }
+
+  probToString() {
+    return "Probabilities : [ ".concat(
+      round(math.abs(math.square(this.alpha()))),
+      ", ",
+      round(math.abs(math.square(this.beta()))),
+      " ]"
+    );
+  }
+}
+
+function round(num) {
+  return (Math.round(num * 100) / 100).toString();
 }

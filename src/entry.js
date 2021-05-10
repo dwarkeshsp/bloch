@@ -30,10 +30,20 @@ camera.lookAt(new Vector3(0, 0, 0));
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setClearColor(0xffffff, 1);
 
+const state = document.createElement("div");
+state.style =
+  "position: absolute;top: 10px; left: 10px; width: 1d00%;text-align: left;z-index: 100;display:block;";
+
+const probability = document.createElement("div");
+probability.style =
+  "position: absolute;top: 40px; left: 10px; width: 1d00%;text-align: left;z-index: 100;display:block;";
+
 // render loop
 const onAnimationFrameHandler = (timeStamp) => {
   renderer.render(scene, camera);
   seedScene.update && seedScene.update(timeStamp);
+  state.innerHTML = seedScene.blochSphere.blochVector.stateToString();
+  probability.innerHTML = seedScene.blochSphere.blochVector.probToString();
   window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
@@ -51,3 +61,5 @@ window.addEventListener("resize", windowResizeHanlder);
 // dom
 document.body.style.margin = 0;
 document.body.appendChild(renderer.domElement);
+document.body.appendChild(state);
+document.body.appendChild(probability);
