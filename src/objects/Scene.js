@@ -14,12 +14,12 @@ export default class Scene extends THREE.Group {
     this.gates = [
       new Gate(
         "Pauli X",
-        new THREE.Quaternion(0, 0, 1, 0),
+        new THREE.Quaternion(0, 0, -1, 0),
         new THREE.Vector3(-6, 0, -1.5)
       ),
       new Gate(
         "Pauli Y",
-        new THREE.Quaternion(0, 1, 0, 0),
+        new THREE.Quaternion(0, -1, 0, 0),
         new THREE.Vector3(-2, 0, -1.5)
       ),
       new Gate(
@@ -29,7 +29,7 @@ export default class Scene extends THREE.Group {
       ),
       new Gate(
         "Hadamard",
-        new THREE.Quaternion(0, 1, 0, 1).normalize(),
+        new THREE.Quaternion(0, 1, 1, 0).normalize(),
         new THREE.Vector3(6, 0, -1.5)
       ),
     ];
@@ -42,8 +42,8 @@ export default class Scene extends THREE.Group {
 
     for (const gate of this.gates) {
       if (gate.intersectsPoint(this.blochSphere.position)) {
-        console.log("a");
-        // this.blochSphere.applyQuaternion(gate.quaternion);
+        console.log(gate.name);
+        this.blochSphere.applyGate(gate.unitQuaterion, timeStamp);
       }
     }
   }
