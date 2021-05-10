@@ -158,8 +158,8 @@ export default class BlochSphere extends THREE.Group {
     this.blochVector.update(timeStamp);
   }
 
-  applyGate(q, timeStamp) {
-    this.blochVector.applyGate(q, timeStamp);
+  applyQMatrix(qMatrix) {
+    this.blochVector.applyQMatrix(qMatrix);
   }
 }
 

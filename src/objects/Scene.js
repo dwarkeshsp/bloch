@@ -4,6 +4,7 @@ import Lights from "./Lights.js";
 import BlochSphere from "./BlochSphere";
 import Gate from "./Gate";
 import Floor from "./Floor";
+import * as math from "mathjs";
 
 export default class Scene extends THREE.Group {
   constructor() {
@@ -14,22 +15,34 @@ export default class Scene extends THREE.Group {
     this.gates = [
       new Gate(
         "Pauli X",
-        new THREE.Quaternion(0, 0, -1, 0),
+        math.matrix([
+          [0, 1],
+          [1, 0],
+        ]),
         new THREE.Vector3(-6, 0, -1.5)
       ),
       new Gate(
         "Pauli Y",
-        new THREE.Quaternion(0, -1, 0, 0),
+        math.matrix([
+          [0, math.complex(0, -1)],
+          [1, math.complex(0, 1)],
+        ]),
         new THREE.Vector3(-2, 0, -1.5)
       ),
       new Gate(
         "Pauli Z",
-        new THREE.Quaternion(1, 0, 0, 0),
+        math.matrix([
+          [1, 0],
+          [0, -1],
+        ]),
         new THREE.Vector3(2, 0, -1.5)
       ),
       new Gate(
         "Hadamard",
-        new THREE.Quaternion(0, 1, 1, 0).normalize(),
+        math.matrix([
+          [1 / Math.sqrt(2), 1 / Math.sqrt(2)],
+          [1 / Math.sqrt(2), -1 / Math.sqrt(2)],
+        ]),
         new THREE.Vector3(6, 0, -1.5)
       ),
     ];
@@ -43,7 +56,7 @@ export default class Scene extends THREE.Group {
     for (const gate of this.gates) {
       if (gate.intersectsPoint(this.blochSphere.position)) {
         console.log(gate.name);
-        this.blochSphere.applyGate(gate.qMatrix, timeStamp);
+        this.blochSphere.applyQMatrix(gate.qMatrix);
       }
     }
   }
