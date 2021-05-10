@@ -152,9 +152,10 @@ export default class BlochSphere extends THREE.Group {
       this.position.add(difference);
       if (this.position.equals(this.target)) {
         this.moving = false;
-        console.log("done");
+        console.log("movement done");
       }
     }
+
     this.blochVector.update(timeStamp);
   }
 

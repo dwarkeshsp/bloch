@@ -9,6 +9,8 @@ export default class BlochVector extends THREE.Group {
     this.theta = 0;
     this.phi = 0;
 
+    this.rotating = false;
+
     const axis = new THREE.Mesh(
       new THREE.CylinderGeometry(0.03, 0.03, 1),
       new THREE.MeshBasicMaterial({ color: this.color() })
@@ -45,13 +47,14 @@ export default class BlochVector extends THREE.Group {
       this.phi = 0;
 
     this.rotation.x = this.theta;
-    this.rotation.z = -this.phi;
 
     console.log(alpha, beta);
 
     console.log(this.theta, this.phi);
 
     console.log("after", this.state);
+
+    this.rotating = true;
 
     // this.arrow.material.color = this.color();
     // this.axis.material.color = this.color();
@@ -65,15 +68,23 @@ export default class BlochVector extends THREE.Group {
   }
 
   update(timeStamp) {
-    // if (timeStamp < this.timeStart + 1000) {
-    //   console.log("hreerd");
-    //   this.setRotationFromQuaternion(
-    //     this.currentQuaternion
-    //       .clone()
-    //       .slerp(this.targetQuaternion, timeStamp / 1000)
-    //   );
-    // } else {
-    //   this.currentQuaternion = this.quaternion;
-    // }
+    if (this.rotating) {
+      let dTheta = this.theta - this.rotation.x;
+      if (Math.abs(dTheta) > 0.01) {
+        dTheta /= 10;
+      }
+      this.rotation.x += dTheta;
+
+      let dPhi = -this.phi - this.rotation.z;
+      if (Math.abs(dPhi) > 0.01) {
+        dPhi /= 10;
+      }
+      this.rotation.z += dPhi;
+
+      if (this.rotation.x == this.theta && this.rotation.z == this.phi) {
+        this.rotating = false;
+        console.log("rotation done");
+      }
+    }
   }
 }
