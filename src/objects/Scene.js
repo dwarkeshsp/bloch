@@ -48,6 +48,8 @@ export default class Scene extends THREE.Group {
     ];
 
     this.add(new Lights(), this.blochSphere, ...this.gates);
+
+    this.gatesApplied = [];
   }
 
   update(timeStamp) {
@@ -56,8 +58,19 @@ export default class Scene extends THREE.Group {
     for (const gate of this.gates) {
       if (gate.intersectsPoint(this.blochSphere.position)) {
         console.log(gate.name);
+        this.gatesApplied.push(gate.name);
+        console.log(this.gatesApplied);
         this.blochSphere.applyQMatrix(gate.qMatrix);
       }
     }
+  }
+
+  gatesToString() {
+    let result = "Gates applied: ";
+    for (const gate of this.gatesApplied) {
+      result += gate + ", ";
+    }
+
+    return result;
   }
 }

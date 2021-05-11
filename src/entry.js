@@ -38,12 +38,17 @@ const probability = document.createElement("div");
 probability.style =
   "position: absolute;top: 40px; left: 10px; width: 1d00%;text-align: left;z-index: 100;display:block;";
 
+const gates = document.createElement("div");
+gates.style =
+  "position: absolute;top: 70px; left: 10px; width: 1d00%;text-align: left;z-index: 100;display:block;";
+
 // render loop
 const onAnimationFrameHandler = (timeStamp) => {
   renderer.render(scene, camera);
   seedScene.update && seedScene.update(timeStamp);
   state.innerHTML = seedScene.blochSphere.blochVector.stateToString();
   probability.innerHTML = seedScene.blochSphere.blochVector.probToString();
+  gates.innerHTML = seedScene.gatesToString();
   window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
@@ -63,3 +68,4 @@ document.body.style.margin = 0;
 document.body.appendChild(renderer.domElement);
 document.body.appendChild(state);
 document.body.appendChild(probability);
+document.body.appendChild(gates);

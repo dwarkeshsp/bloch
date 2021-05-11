@@ -1,6 +1,6 @@
 import * as math from "mathjs";
-import { string } from "mathjs";
 import * as THREE from "three";
+import { complexToString, round } from "../utilities";
 
 export default class BlochVector extends THREE.Group {
   constructor() {
@@ -40,8 +40,6 @@ export default class BlochVector extends THREE.Group {
   }
 
   applyQMatrix(qMatrix) {
-    // console.log("before", this.state);
-
     this.state = math.multiply(qMatrix, this.state);
     // equation derived using http://akyrillidis.github.io/notes/quant_post_7
     this.theta = math.re(math.multiply(2, math.acos(this.alpha())));
@@ -84,8 +82,6 @@ export default class BlochVector extends THREE.Group {
 
       this.arrow.material.color = this.color();
       this.axis.material.color = this.color();
-      // console.log(this.rotation.toArray());
-      console.log(this.color());
 
       if (this.rotation.x == this.theta && this.rotation.z == this.phi) {
         this.rotating = false;
@@ -99,14 +95,10 @@ export default class BlochVector extends THREE.Group {
     const beta = this.beta();
 
     return "Amplitudes: [ ".concat(
-      round(math.re(alpha)),
-      " + ",
-      round(math.im(alpha)),
-      "i, ",
-      round(math.re(beta)),
-      " + ",
-      round(math.im(beta)),
-      "i ]"
+      complexToString(alpha),
+      ", ",
+      complexToString(beta),
+      "]"
     );
   }
 
@@ -118,8 +110,4 @@ export default class BlochVector extends THREE.Group {
       " ]"
     );
   }
-}
-
-function round(num) {
-  return (Math.round(num * 100) / 100).toString();
 }
