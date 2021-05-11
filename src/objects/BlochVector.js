@@ -58,19 +58,14 @@ export default class BlochVector extends THREE.Group {
     if (isNaN(this.phi) || this.phi == Infinity || this.phi == -Infinity)
       this.phi = 0;
 
-    // console.log("after", this.state);
-
     this.rotating = true;
-
-    // this.arrow.material.color = this.color();
-    // this.axis.material.color = this.color();
   }
 
   color() {
-    const r = Math.round(this.quaternion.x * 128 + 127).toString();
-    const g = Math.round(this.quaternion.y * 128 + 127).toString();
-    const b = Math.round(this.quaternion.z * 128 + 127).toString();
-    return new THREE.Color("rgb(" + r + ", " + g + ", " + b + ")");
+    const g = this.rotation.x / Math.PI;
+    const b = this.rotation.y / Math.PI;
+    const r = this.rotation.z / Math.PI;
+    return new THREE.Color(r, g, b);
   }
 
   update(timeStamp) {
@@ -86,6 +81,11 @@ export default class BlochVector extends THREE.Group {
         dPhi /= 10;
       }
       this.rotation.z += dPhi;
+
+      this.arrow.material.color = this.color();
+      this.axis.material.color = this.color();
+      // console.log(this.rotation.toArray());
+      console.log(this.color());
 
       if (this.rotation.x == this.theta && this.rotation.z == this.phi) {
         this.rotating = false;

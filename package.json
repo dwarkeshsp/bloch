@@ -15,8 +15,10 @@
     "build": "webpack --mode production"
   },
   "dependencies": {
+    "load-bmfont": "^1.4.1",
     "mathjs": "^9.3.2",
-    "three": "^0.124.0",
+    "three": "^0.128.0",
+    "three-bmfont-text": "^3.0.1",
     "webpack-cli": "^4.3.1"
   },
   "devDependencies": {

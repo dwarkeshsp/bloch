@@ -12,6 +12,7 @@ export default class BlochSphere extends THREE.Group {
 
     document.addEventListener("keydown", (ev) => this.onKeyDown(ev.key));
 
+    //TODO: add color gradient:  https://stackoverflow.com/questions/52614371/apply-color-gradient-to-material-on-mesh-three-js/52615186#52615186
     const surface = new THREE.Mesh(
       new THREE.SphereGeometry(1, 64, 64),
       new THREE.MeshPhongMaterial({
