@@ -19,7 +19,7 @@ export default class Scene extends THREE.Group {
           [0, 1],
           [1, 0],
         ]),
-        new THREE.Vector3(-6, 0, -1.5)
+        new THREE.Vector3(-5, 0, -1.5)
       ),
       new Gate(
         "Pauli Y",
@@ -27,15 +27,7 @@ export default class Scene extends THREE.Group {
           [0, math.complex(0, -1)],
           [math.complex(0, 1), 0],
         ]),
-        new THREE.Vector3(-2, 0, -1.5)
-      ),
-      new Gate(
-        "Pauli Z",
-        math.matrix([
-          [1, 0],
-          [0, -1],
-        ]),
-        new THREE.Vector3(2, 0, -1.5)
+        new THREE.Vector3(-2.5, 0, -1.5)
       ),
       new Gate(
         "Hadamard",
@@ -43,7 +35,31 @@ export default class Scene extends THREE.Group {
           [1 / Math.sqrt(2), 1 / Math.sqrt(2)],
           [1 / Math.sqrt(2), -1 / Math.sqrt(2)],
         ]),
-        new THREE.Vector3(6, 0, -1.5)
+        new THREE.Vector3(0, 0, -1.5)
+      ),
+      new Gate(
+        "Pauli Z",
+        math.matrix([
+          [1, 0],
+          [0, -1],
+        ]),
+        new THREE.Vector3(2.5, 0, -1.5)
+      ),
+      new Gate(
+        "Phase",
+        math.matrix([
+          [1, 0],
+          [0, math.complex(0, 1)],
+        ]),
+        new THREE.Vector3(5, 0, -1.5)
+      ),
+      new Gate(
+        "R_y π/8",
+        math.matrix([
+          [math.cos(math.pi / 8), -math.sin(math.pi / 8)],
+          [math.sin(math.pi / 8), math.cos(math.pi / 8)],
+        ]),
+        new THREE.Vector3(7.5, 0, -1.5)
       ),
     ];
 

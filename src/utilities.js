@@ -8,7 +8,7 @@ export function complexToString(num) {
   if (re && im)
     result += round(math.re(num)) + " + " + round(math.im(num)) + "i";
   else if (im)
-    if (math.abs(math.abs(math.im(num)) - 1) < Number.EPSILON) result += "i";
+    if (math.abs(math.im(num) - 1) < Number.EPSILON) result += "i";
     else result += round(math.im(num)) + "i";
   else result += round(math.re(num));
 
