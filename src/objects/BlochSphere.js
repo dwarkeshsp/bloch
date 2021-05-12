@@ -1,3 +1,4 @@
+import { min } from "mathjs";
 import * as THREE from "three";
 import BlochVector from "./BlochVector";
 
@@ -66,40 +67,18 @@ export default class BlochSphere extends THREE.Group {
       0.1
     );
 
-    const textStyle = {
-      width: 128,
-      height: 128,
-      fillStyle: 0xffffff,
-      font: 'bold italic 64px Georgia, "Times New Roman", serif',
-    };
+    const xLabel = new Label("x", new THREE.Vector3(0, 0, 1.65));
+    const yLabel = new Label("y", new THREE.Vector3(1.65, 0, 0));
+    const zLabel = new Label("z", new THREE.Vector3(0, 1.65, 0));
 
-    const xLabel = new THREE.Sprite(
-      new THREE.SpriteMaterial({
-        map: Object.assign(SurfaceText(textStyle)),
-      })
-    );
-    const yLabel = new THREE.Sprite(
-      new THREE.SpriteMaterial({
-        map: Object.assign(SurfaceText(textStyle)),
-      })
-    );
-    const zLabel = new THREE.Sprite(
-      new THREE.SpriteMaterial({
-        map: Object.assign(SurfaceText(textStyle)),
-      })
-    );
+    const zeroLabel = new Label("|0〉", new THREE.Vector3(0, 1.45, 0));
+    const oneLabel = new Label("|1〉", new THREE.Vector3(0, -1.45, 0));
 
-    xLabel.material.map.print("x");
-    xLabel.position.set(0, 0, 1.45);
-    xLabel.scale.set(0.25, 0.25, 0.25);
+    const plusLabel = new Label("|+〉", new THREE.Vector3(0, 0, 1.45));
+    const minusLabel = new Label("|-〉", new THREE.Vector3(0, 0, -1.45));
 
-    yLabel.material.map.print("y");
-    yLabel.position.set(1.45, 0, 0);
-    yLabel.scale.set(0.25, 0.25, 0.25);
-
-    zLabel.material.map.print("z");
-    zLabel.position.set(0, 1.45, 0);
-    zLabel.scale.set(0.25, 0.25, 0.25);
+    const iLabel = new Label("|i〉", new THREE.Vector3(1.45, 0, 0));
+    const minusILabel = new Label("|-i〉", new THREE.Vector3(-1.45, 0, 0));
 
     this.add(
       surface,
@@ -112,6 +91,12 @@ export default class BlochSphere extends THREE.Group {
       xLabel,
       yLabel,
       zLabel,
+      zeroLabel,
+      oneLabel,
+      plusLabel,
+      minusLabel,
+      iLabel,
+      minusILabel,
       this.blochVector
     );
 
@@ -162,6 +147,30 @@ export default class BlochSphere extends THREE.Group {
 
   applyQMatrix(qMatrix) {
     this.blochVector.applyQMatrix(qMatrix);
+  }
+}
+
+class Label extends THREE.Group {
+  constructor(text, position) {
+    super();
+
+    const textStyle = {
+      width: 128,
+      height: 128,
+      fillStyle: 0xffffff,
+      font: 'bold italic 64px Georgia, "Times New Roman", serif',
+    };
+
+    const label = new THREE.Sprite(
+      new THREE.SpriteMaterial({
+        map: Object.assign(SurfaceText(textStyle)),
+      })
+    );
+
+    label.material.map.print(text);
+    label.position.set(position.x, position.y, position.z);
+    label.scale.set(0.33, 0.33, 0.33);
+    this.add(label);
   }
 }
 
