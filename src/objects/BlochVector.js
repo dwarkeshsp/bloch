@@ -11,6 +11,7 @@ export default class BlochVector extends THREE.Group {
     this.phi = 0;
 
     this.rotating = false;
+    this.error = "";
 
     const axis = new THREE.Mesh(
       new THREE.CylinderGeometry(0.03, 0.03, 1),
@@ -41,20 +42,37 @@ export default class BlochVector extends THREE.Group {
 
   applyQMatrix(qMatrix) {
     this.state = math.multiply(qMatrix, this.state);
+
     // equation derived using http://akyrillidis.github.io/notes/quant_post_7
     this.theta = math.re(math.multiply(2, math.acos(this.alpha())));
     this.phi = math.re(
-      math.im(math.log(math.divide(this.beta(), math.sin(this.theta / 2))))
+      math.divide(
+        math.log(math.divide(this.beta(), math.sin(this.theta / 2))),
+        math.i
+      )
     );
 
     console.log("state", this.alpha(), this.beta());
 
     console.log("angles", this.theta, this.phi);
 
-    if (isNaN(this.theta) || this.theta == Infinity || this.theta == -Infinity)
+    if (
+      isNaN(this.theta) ||
+      this.theta == Infinity ||
+      this.theta == -Infinity
+    ) {
+      this.error = "Floating point error. Theta = ".concat(this.theta, ".");
       this.theta = 0;
-    if (isNaN(this.phi) || this.phi == Infinity || this.phi == -Infinity)
+    } else if (
+      isNaN(this.phi) ||
+      this.phi == Infinity ||
+      this.phi == -Infinity
+    ) {
+      this.error = "Floating point error. Phi = ".concat(this.phi, ".");
       this.phi = 0;
+    } else {
+      this.error = "";
+    }
 
     this.rotating = true;
   }

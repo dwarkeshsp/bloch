@@ -75,7 +75,6 @@ export default class Scene extends THREE.Group {
       if (gate.intersectsPoint(this.blochSphere.position)) {
         console.log(gate.name);
         this.gatesApplied.push(gate.name);
-        console.log(this.gatesApplied);
         this.blochSphere.applyQMatrix(gate.qMatrix);
       }
     }
