@@ -23,7 +23,7 @@ const seedScene = new SeedScene();
 scene.add(seedScene);
 
 // camera
-camera.position.set(0, 5, 10);
+camera.position.set(0, 6, 12);
 camera.lookAt(new Vector3(0, 0, 0));
 
 // renderer
