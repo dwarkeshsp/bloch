@@ -46,6 +46,11 @@ const error = document.createElement("div");
 error.style =
   "position: absolute;bottom: 10px; left: 10px; width: 1d00%;text-align: left;z-index: 100;display:block;";
 
+const instructions = document.createElement("div");
+instructions.style =
+  "position: absolute;top: 10px;width: 100%;text-align: center;z-index: 100;display:block;";
+instructions.innerHTML = "Use WASD to move Bloch sphere across gates";
+
 // render loop
 const onAnimationFrameHandler = (timeStamp) => {
   renderer.render(scene, camera);
@@ -76,3 +81,4 @@ document.body.appendChild(state);
 document.body.appendChild(probability);
 document.body.appendChild(gates);
 document.body.appendChild(error);
+document.body.appendChild(instructions);
